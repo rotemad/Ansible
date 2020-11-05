@@ -1,0 +1,25 @@
+---
+- name: Generate the ssh-key
+  hosts: localhost
+  tasks:
+    - name: Generate an ssh-key
+      shell: ssh-keygen -t rsa -N '' -f $HOME/.ssh/server-key.rsa
+    
+- name: Generate the ssh-key
+  hosts: all
+  become: true
+  tasks:
+    - name: Create a user
+      user:
+        name: rotem
+        group: admin
+        state: present
+        shell: /bin/bash
+        createhome: yes
+    
+    - name: Copy the server pub key to the nodes
+        authorized_key:
+        user: rotem
+        state: present
+        key: "{{ lookup('file', '/home/ubuntu/.ssh/server-key.rsa.pub') }}"
+...
