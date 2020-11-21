@@ -1,0 +1,8 @@
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+
+[ubuntu]
+10.10.1.238 ansible_ssh_user=ubuntu
+
+[rad-hat]
+10.10.1.8 ansible_ssh_user=ec2-user

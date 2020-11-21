@@ -1,0 +1,40 @@
+---
+### If Debian based
+- name: apt update (debian based)
+  apt:
+  update_cache: yes
+  cache_valid_time: 3600
+  when: ansible_pkg_mgr =='apt'
+
+- name: Install the prerequisites packages (debian based)
+  apt:
+  pkg:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg-agent
+    - software-properties-common
+  state: present  
+  when: ansible_pkg_mgr =='apt'
+
+- name: Add the GPG key (debian based)
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+  when: ansible_pkg_mgr =='apt'
+
+- name: Add the Docker repo (debian based)
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+  when: ansible_pkg_mgr =='apt'
+
+### If Red Hat based
+
+- name: Add the Docker repo (red-hat based)   
+  yum_repository:
+    name: docker-ce
+    description: Docker repo
+    baseurl: https://download.docker.com/linux/centos/$releasever/$basearch/stable
+    gpgkey: https://download.docker.com/linux/centos/gpg
+    gpgcheck: yes
+  when: ansible_pkg_mgr =='dnf'

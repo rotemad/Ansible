@@ -1,0 +1,8 @@
+---
+- name: run nginx container
+  docker_container:
+    name: nginx
+    image: nginx
+    state: started
+    ports:
+      - 8080:80
