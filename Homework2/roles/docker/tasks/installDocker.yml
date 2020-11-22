@@ -1,31 +1,14 @@
 ---
 # Docker installation 
-### If Debian based
 - name: update apt's cache and install Docker
-  apt:
-  pkg:
+  package:
+    name:
     - docker-ce
     - docker-ce-cli
     - containerd.io
     - python3-pip
   notify:
     - RestartDocker
-  when: ansible_pkg_mgr =='apt'
-
-### If Red Hat based
-- name: Install the prerequisites packages (red-hat based)
-  #dnf:
-  #  name:
-  #    - docker-ce 
-  #    - docker-ce-cli
-  #    - containerd.io
-  #state: latest
-  #update_cache: yes
-  ##### Python issues with dnf && yum in ec2 "Couldn't resolve host name for https://rhui3.REGION.aws.ce.redhat.com"
-  shell: dnf install docker-ce docker-ce-cli containerd.io python3-pip -y
-  notify:
-    - RestartDocker
-  when: ansible_pkg_mgr =='dnf'
 
 - name: Install docker-py
   pip:

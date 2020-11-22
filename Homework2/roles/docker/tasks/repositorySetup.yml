@@ -7,8 +7,8 @@
   when: ansible_pkg_mgr =='apt'
 
 - name: Install the prerequisites packages (debian based)
-  apt:
-  pkg:
+  package:
+    name:
     - apt-transport-https
     - ca-certificates
     - curl
@@ -29,7 +29,6 @@
   when: ansible_pkg_mgr =='apt'
 
 ### If Red Hat based
-
 - name: Add the Docker repo (red-hat based)   
   yum_repository:
     name: docker-ce
