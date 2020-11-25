@@ -1,3 +1,7 @@
 ---
 # handlers file for roles/docker
-- include: RestartDocker.yml
+- name: RestartDocker
+  service:
+    name: docker
+    state: restarted
+...
